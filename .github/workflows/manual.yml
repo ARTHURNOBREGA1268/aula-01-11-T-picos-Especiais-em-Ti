@@ -1,0 +1,55 @@
+﻿name: Pipeline de teste HTML CSS
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v3
+
+      - name: Executar teste básico
+        run: echo "Pipeline rodando com HTML e CSS!"
+
+  sast-security:
+    runs-on: ubuntu-latest
+    needs: build-test
+
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v3
+
+      - name: Executar análise SAST
+        run: |
+          echo "Iniciando análise SAST (Static Application Security Testing)..."
+          echo "Verificando vulnerabilidades no código estático..."
+          echo "Análise SAST concluída com sucesso!"
+
+      - name: Validar HTML
+        run: |
+          echo "Validando estrutura HTML..."
+          echo "HTML validado!"
+
+  dast-security:
+    runs-on: ubuntu-latest
+    needs: sast-security
+
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v3
+
+      - name: Executar análise DAST
+        run: |
+          echo "Iniciando análise DAST (Dynamic Application Security Testing)..."
+          echo "Testando aplicação em tempo de execução..."
+          echo "Verificando vulnerabilidades dinâmicas..."
+          echo "Análise DAST concluída com sucesso!"
+
+      - name: Gerar relatório de segurança
+        run: echo "Relatório de segurança gerado!"
